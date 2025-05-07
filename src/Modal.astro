@@ -1,16 +1,48 @@
 ---
-const { isOpen = false, closeText } = Astro.props;
+const { openText, closeText } = Astro.props;
 ---
 
-<button>
-    <slot name="openButton" />
+<button id="toggleButton">
+    { !openText ? <slot name="openButton" /> : openText }
 </button>
 
-<dialog open={isOpen}>
-    <slot name="content"/>
+<dialog id="modal">
+    <slot />
     <form method="dialog">
         <button>
-            {close}
+            {closeText}
         </button>
     </form>
 </dialog>
+
+<script>
+    const button = document.getElementById("toggleButton");
+    const dialog = document.getElementById("modal") as HTMLDialogElement;
+
+    button?.addEventListener("click", () => {
+        dialog.showModal();
+    });
+</script>
+
+<style>
+    dialog {
+        background: rgba(0, 0, 0, 0.5);
+        border-radius: 8px;
+        padding: 20px;
+        width: 300px;
+        height: 200px;
+    }
+
+    button {
+        background-color: #007bff;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+
+    button:hover {
+        background-color: #0056b3;
+    }
+</style>
