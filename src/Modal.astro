@@ -1,0 +1,16 @@
+---
+const { isOpen = false, closeText } = Astro.props;
+---
+
+<button>
+    <slot name="openButton" />
+</button>
+
+<dialog open={isOpen}>
+    <slot name="content"/>
+    <form method="dialog">
+        <button>
+            {close}
+        </button>
+    </form>
+</dialog>
